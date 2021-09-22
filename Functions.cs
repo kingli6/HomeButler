@@ -57,6 +57,12 @@ namespace HomeButlerV1
             StudyMenu.MenuList.Add("Learn C#");
             StudyMenu.MenuList.Add("Back");
 
+            MenuActivities EatMenu = new MenuActivities("Eat", 3);
+            EatMenu.AllowedRoom.Add(Room.Kitchen);
+            EatMenu.AllowedRoom.Add(Room.LivingRoom);//Trial. If we can have this in logic to print out another result.
+            EatMenu.AllowedRoom.Add(Room.Back);
+
+
             switch (menuLevel)
             {
                 //Main menu Level 1
