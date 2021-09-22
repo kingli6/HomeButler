@@ -1,198 +1,146 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace HomeButlerV1
 {
-    class Functions
+    public class Functions
     {
-        List<string> menuList = new List<string>();
-        string menuTitle;
-        int menuLevel;
-        char userInput;
+        public List<string> menuList = new List<string>();
+        public string menuTitle;
+        public int menuLevel;
+        int userInput;
         bool continueProgram = true;
+        List<string> roomList = new List<string> { "LivingRoom", "Kitchen", "BedRoom", "Back", };
 
         public void RunProgram()
         {
-            //could be cool to initiate everything from a file.
             Menu mainMenu = new Menu("HomeButler", 1);
             mainMenu.MenuList.Add("Entertainment");
-            mainMenu.MenuList.Add("Body");
+            mainMenu.MenuList.Add("Health");
             mainMenu.MenuList.Add("Studies");
             mainMenu.MenuList.Add("Exit Program");
+            Functions mainMenuDetails = mainMenu.GetNameLevelList();
 
-            menuList = mainMenu.MenuList;
-            menuTitle = mainMenu.MenuName;
-            menuLevel = mainMenu.MenuLevel;
+            Menu entertainmentMenu = new Menu("Entertainment", 2);
+            entertainmentMenu.MenuList.Add("Films");
+            entertainmentMenu.MenuList.Add("Games");
+            entertainmentMenu.MenuList.Add("Back");
+            Functions entertainmentDetails = entertainmentMenu.GetNameLevelList();
 
+            Menu healthMenu = new Menu("Health", 2);
+            healthMenu.MenuList.Add("Eat");
+            healthMenu.MenuList.Add("Rest");
+            healthMenu.MenuList.Add("Back");
+            Functions healthDetails = healthMenu.GetNameLevelList();
 
+            Menu studyMenu = new Menu("Study", 2);
+            studyMenu.MenuList.Add("Read Book");
+            studyMenu.MenuList.Add("Learn C#");
+            studyMenu.MenuList.Add("Back");
+            Functions studyDetails = studyMenu.GetNameLevelList();
 
+            MenuActivities eatMenu = new MenuActivities("Eat", 3);
+            eatMenu.AllowedRoom.Add(Room.Kitchen);
+            eatMenu.AllowedRoom.Add(Room.LivingRoom);//Trial. If we can have this in logic to print out another result.
+            eatMenu.AllowedRoom.Add(Room.Back);
 
+            bool oneTimeuseBool = true;
+            //to make the print function work for the first time, we are using
+            //this bool to apply values to needed fields
             while (continueProgram)
             {
                 Console.Clear();
-
-                PrintMenu();
+                if (oneTimeuseBool)
+                {
+                    menuTitle = mainMenuDetails.menuTitle;
+                    menuLevel = mainMenuDetails.menuLevel;
+                    menuList = mainMenuDetails.menuList;
+                }
+                PrintMenu(menuTitle, menuList);
                 userInput = UserChoice();
-                LogicMethod();
-                
+                MenuLogic();
+
 
             }
-        }
-
-        private void LogicMethod()
-        {
-            Menu EntertainmentMenu = new Menu("Entertainment", 2);
-            EntertainmentMenu.MenuList.Add("Films");
-            EntertainmentMenu.MenuList.Add("Games");
-            EntertainmentMenu.MenuList.Add("Back");
-
-            Menu HealthMenu = new Menu("Health", 2);
-            HealthMenu.MenuList.Add("Eat");
-            HealthMenu.MenuList.Add("Rest");
-            HealthMenu.MenuList.Add("Back");
-
-            Menu StudyMenu = new Menu("Study", 2);
-            StudyMenu.MenuList.Add("Read Book");
-            StudyMenu.MenuList.Add("Learn C#");
-            StudyMenu.MenuList.Add("Back");
-
-            MenuActivities EatMenu = new MenuActivities("Eat", 3);
-            EatMenu.AllowedRoom.Add(Room.Kitchen);
-            EatMenu.AllowedRoom.Add(Room.LivingRoom);//Trial. If we can have this in logic to print out another result.
-            EatMenu.AllowedRoom.Add(Room.Back);
-
-
-            switch (menuLevel)
+            void MenuLogic()
             {
-                //Main menu Level 1
-                case 1:
-                    {//If user chooses 4(Switch Off), The program stops. else we move menuLevel to 2
-                        if (userInput == '4')
-                        {
-                            continueProgram = false;
-                            Console.WriteLine("Going to sleep");
+                if (menuLevel == 1)
+                {
+                    menuLevel = 2;
+                    oneTimeuseBool = false;
+                    //turning it off since the user determines from now on.
+                    switch (userInput)
+                    {
+                        case 1:
+                            {
+                                menuTitle = entertainmentDetails.menuTitle; 
+                                menuList = entertainmentDetails.menuList;
+                                break;
+                            }
+                        case 2:
+                            {
+                                menuTitle = healthDetails.menuTitle;
+                                menuList = healthDetails.menuList;
+                                break;
+                            }
+                        case 3:
+                            {
+                                menuTitle = studyDetails.menuTitle;
+                                menuList = studyDetails.menuList;
+                                break;
+                            }
+                        case 4:
+                            {
+                                continueProgram = false;
+                                Console.WriteLine("Going to Sleep");
+                                break;
+                            }
+                        default:
                             break;
-                        }
-                        else
-                            menuLevel = 2;
-
-                        //Userchoices from Level 1 menu
-                        if (userInput == '1')
-                        {
-                            menuTitle = EntertainmentMenu.MenuName;
-                            menuList = EntertainmentMenu.MenuList;
-                        }
-                        else if (userInput == '2')
-                        {
-                            menuTitle = HealthMenu.MenuName;
-                            menuList = HealthMenu.MenuList;
-                        }
-                        else
-                        {
-                            menuTitle = StudyMenu.MenuName;
-                            menuList = StudyMenu.MenuList;
-                        }
-                        break;
                     }
-                //Second meny Level 2 (Inside Entertainment, body, studies)
-                case 2:
+                }
+                else if (menuLevel == 2)
+                {
+                    //We are using the menuTitle to indicate where we are
+                    if (menuTitle == "Entertainment")
                     {
-                        if (menuTitle == "Entertainment")
+                        switch (userInput)
                         {
-                            switch (userInput)
-                            {
-                                case '1':
-                                    {
-                                        //Films
-                                        break;
-                                    }
-                                case '2':
-                                    {
-                                        //Games
-                                        break;
-                                    }
-                                case '3':
-                                    {
-                                        //goBack
-                                        break;
-                                    }
-
-                                default:
+                            case 1:
+                                {
+                                    // 
                                     break;
-                            }
-
-                        }
-                        else if (menuTitle == "Body")
-                        {
-                            switch (userInput)
-                            {
-                                case '1':
-                                    {
-                                        //Eat
-                                        break;
-                                    }
-                                case '2':
-                                    {
-                                        //Rest
-                                        break;
-                                    }
-                                case '3':
-                                    {
-                                        //goBack
-                                        break;
-                                    }
-
-                                default:
+                                }
+                            case 2:
+                                {
                                     break;
-                            }
-
-                        }
-                        else
-                        {
-                            //else menu is study
-                            switch (userInput)
-                            {
-                                case '1':
-                                    {
-                                        //Read Book
-                                        break;
-                                    }
-                                case '2':
-                                    {
-                                        //C# Programming
-                                        break;
-                                    }
-                                case '3':
-                                    {
-                                        //goBack
-                                        break;
-                                    }
-
-                                default:
+                                }
+                            case 3:
+                                {
                                     break;
-                            }
+                                }
+                            default:
+                                break;
                         }
-                        break;
                     }
-                //Thrid menu Level 3 (all activities)
-                case 3:
+                    else if (menuTitle == "Health")
                     {
 
-                        break;
                     }
+                    else//its studies
+                    {
 
-                default:
-                    break;
+                    }
+                }
             }
+
+            
         }
 
-        private char UserChoice()
-        {
-            return char.Parse(Console.ReadLine());
-        }
 
-        private void PrintMenu()
+        void PrintMenu(string menuTitle, List<string> menuList)
         {
             Console.WriteLine(menuTitle);//make this text bigger
             int i = 1;
@@ -202,6 +150,11 @@ namespace HomeButlerV1
                 i++;
             }
             Console.Write("Please Choose: ");
+        }
+
+        private int UserChoice()
+        {
+            return int.Parse(Console.ReadLine());
         }
     }
 }

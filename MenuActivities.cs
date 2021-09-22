@@ -7,6 +7,7 @@ namespace HomeButlerV1
     class MenuActivities : Menu, IRoom
     {
         public List<Room> AllowedRoom;
+        public List<string> defaultRooms = new List<string> { "LivingRoom", "Kitchen", "BedRoom", "Back", };
         public MenuActivities(string menuName, int menuLevel)
         {
             MenuName = menuName;

@@ -19,10 +19,19 @@ namespace HomeButlerV1
             MenuList = new List<string>();
         }
 
+        //a method that returns these values?
+        public Functions GetNameLevelList()
+        {
+            Functions result = new Functions();
+            result.menuTitle = MenuName;
+            result.menuLevel = MenuLevel;
+            result.menuList = MenuList;
+            return result;
+        }
+
     }
 }
 /*
-
-    
+   
  
  */
