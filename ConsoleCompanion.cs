@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HomeButler1._0
+namespace HomeButlerV1
 {
     public enum CharType
     {

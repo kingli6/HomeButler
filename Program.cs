@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace HomeButler1._0
+namespace HomeButlerV1
 {
     class Program
     {
         static void Main(string[] args)
         {
             var cc = new ConsoleCompanion();
+            Functions x = new Functions();
+            x.RunProgram();
         }
     }
 }
