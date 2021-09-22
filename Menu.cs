@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeButlerV1
 {
-        class Menu
+        class Menu : IRoom
     {
         public string MenuName;
         public int MenuLevel;
