@@ -6,6 +6,7 @@ namespace HomeButlerV1
 {
     interface IRoom
     {
-        void AddRooms(Room roomName);
+        //void AddRooms(Room roomName);
+        public Functions GetNameLevelList();
     }
 }

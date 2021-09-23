@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeButlerV1
 {
-        class Menu
+        class Menu : IRoom
     {
         public string MenuName;
         public int MenuLevel;
@@ -19,10 +19,19 @@ namespace HomeButlerV1
             MenuList = new List<string>();
         }
 
+        //a method that returns these values?
+        public Functions GetNameLevelList()
+        {
+            Functions result = new Functions();
+            result.menuTitle = MenuName;
+            result.menuLevel = MenuLevel;
+            result.menuList = MenuList;
+            return result;
+        }
+
     }
 }
 /*
-
-    
+   
  
  */
