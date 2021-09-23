@@ -6,9 +6,10 @@ namespace HomeButlerV1
 {
     public enum Room
     {
-        Kitchen,
-        LivingRoom,
-        BedRoom,
-        Back,//option to move back in the menu
+        Kitchen = 1,
+        LivingRoom = 2,
+        BedRoom = 3,
+        StudyRoom = 4
+        
     }
 }

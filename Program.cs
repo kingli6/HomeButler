@@ -9,6 +9,8 @@ namespace HomeButlerV1
             var cc = new ConsoleCompanion();
             Functions x = new Functions();
             x.RunProgram();
+            
+
         }
     }
 }

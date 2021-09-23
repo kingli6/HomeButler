@@ -11,6 +11,7 @@ namespace HomeButlerV1
         public string menuTitle;
         public int menuLevel;
         int userInput;
+        public string TempTitle;
         bool continueProgram = true;
         List<string> roomList = new List<string> { "LivingRoom", "Kitchen", "BedRoom", "Back", };
 
@@ -24,12 +25,32 @@ namespace HomeButlerV1
             Functions mainMenuDetails = mainMenu.GetNameLevelList();
 
             Menu entertainmentMenu = new Menu("Entertainment", 2);
-            entertainmentMenu.MenuList.Add("Films");
+            entertainmentMenu.MenuList.Add("Films");            
             entertainmentMenu.MenuList.Add("Games");
             entertainmentMenu.MenuList.Add("Back");
             Functions entertainmentDetails = entertainmentMenu.GetNameLevelList();
 
+            MenuActivities films = new MenuActivities("Films", 3);
+            films.AddAllowedRooms(Room.LivingRoom);
+
+            MenuActivities games = new MenuActivities("Games", 3);
+            games.AddAllowedRooms(Room.LivingRoom);
+            games.AddAllowedRooms(Room.StudyRoom);
+
+
+
+
+            /*
+             films
+                all the rooms presented
+                    kitchen
+            user has his 4 choices
+                
+             
+             */
             MenuActivities eatMenu = new MenuActivities("Eat", 3);
+            eatMenu.AddAllowedRooms(Room.Kitchen);
+            eatMenu.AddAllowedRooms(Room.LivingRoom);
             Functions eatDetails = eatMenu.GetNameLevelList();
 
             Menu healthMenu = new Menu("Health", 2);
@@ -37,12 +58,22 @@ namespace HomeButlerV1
             healthMenu.MenuList.Add("Rest");
             healthMenu.MenuList.Add("Back");
             Functions healthDetails = healthMenu.GetNameLevelList();
+            /*
+             Here will be things under Health
+             
+             */
 
-            Menu studyMenu = new Menu("Study", 2);
-            studyMenu.MenuList.Add("Read Book");
-            studyMenu.MenuList.Add("Learn C#");
+            Menu studyMenu = new Menu("Education", 2);
+            studyMenu.MenuList.Add("Maths");
+            studyMenu.MenuList.Add("Science");
             studyMenu.MenuList.Add("Back");
             Functions studyDetails = studyMenu.GetNameLevelList();
+
+            //MenuActivities 
+            /*
+             Here will be things under Studies
+             
+             */
 
             bool oneTimeuseBool = true;
             //to make the print function work for the first time, we are using
@@ -59,7 +90,6 @@ namespace HomeButlerV1
                 PrintMenu();
                 userInput = UserChoice();
                 MenuLogic();
-
 
             }
             void MenuLogic()
@@ -108,12 +138,12 @@ namespace HomeButlerV1
                         {
                             case 1:
                                 {
-                                    //Movies
+                                    //Movies, this should lead to room choice?
                                     break;
                                 }
                             case 2:
                                 {
-                                    //games
+                                    //Movies, this should lead to room choice?
                                     break;
                                 }
                             case 3:
@@ -135,6 +165,7 @@ namespace HomeButlerV1
                                 {
                                     menuTitle = eatDetails.menuTitle;
                                     menuList = eatDetails.menuList;
+                                    menuLevel = 3;
                                     break;
                                 }
                             case 2:
@@ -159,14 +190,14 @@ namespace HomeButlerV1
                         switch (userInput)
                         {
                             case 1:
-                                {   //Study1
+                                {   //Programming
                                     //menuTitle = eatDetails.menuTitle;
                                     //menuList = eatDetails.menuList;
                                     break;
                                 }
                             case 2:
                                 {
-                                    //study2
+                                    //Read Book
                                     break;
                                 }
                             case 3:
@@ -184,6 +215,78 @@ namespace HomeButlerV1
                 }
                 else//Menu level 3
                 {
+                    if (menuTitle == "Eat")
+                    {
+                        TempTitle = "Eat";
+                        switch (userInput)
+                        {
+                            case 1:
+                                {
+                                //This should check if eat is available in kitchen
+                                eatMenu.Rooms(1, eatMenu.AllowedRoom);
+                                break;
+                                }
+                            case 2:
+                                //this should check if eat is available in LivingRoom
+                                eatMenu.Rooms(2, eatMenu.AllowedRoom);
+                                break;
+                            case 3:
+                                //this should check if eat is available in bedroom
+                                eatMenu.Rooms(3, eatMenu.AllowedRoom);
+                                break;
+                            case 4:
+                                //this should check if eat is available in study
+                                eatMenu.Rooms(4, eatMenu.AllowedRoom);
+                                break;
+                            default:
+                                break;
+                        }
+                        /* Enum
+                         *  Kitchen = 1,
+                            LivingRoom = 2,
+                            BedRoom = 3,
+                            StudyRoom = 4*/
+
+                    }
+                    else if (menuTitle == "Sleep")
+                    {
+                        TempTitle = "Sleep";
+                        switch (userInput)
+                        {
+                            case 1:
+                                {
+                                    //Checks if available in Bedroom
+                                    //sleepMenu.Rooms();
+                                    break;
+                                }
+                        }
+
+                    }
+                    else if (menuTitle == "Films")
+                    {
+
+                    }
+                    else if (menuTitle == "Games")
+                    {
+
+                    }
+                    else if (menuTitle == "Programming")
+                    {
+                        //In Livingroom
+                    }
+                    else if (menuTitle == "Read a book")
+                    {
+                        //In bedroom
+                    }
+                    else
+                    {
+                        //logic on going back so if user input is
+                        if (userInput == 5)
+                        {
+                            menuTitle = TempTitle;
+                        }
+                    }
+
                     switch (userInput)
                     {
                         case 1:
@@ -203,6 +306,12 @@ namespace HomeButlerV1
                             }
                         case 4:
                             {   //Back
+                                
+                               
+                                break;
+                            }
+                        case 5:
+                            {
                                 //cheat sheet that records previous menu
                                 menuTitle = mainMenuDetails.menuTitle;
                                 menuList = mainMenuDetails.menuList;
@@ -240,6 +349,7 @@ namespace HomeButlerV1
         {
             return int.Parse(Console.ReadLine());
         }
+
     }
 }
 //eatMenu.AllowedRoom.Add(Room.Kitchen);

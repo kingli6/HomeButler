@@ -7,6 +7,15 @@ namespace HomeButlerV1
     interface IRoom
     {
         //void AddRooms(Room roomName);
-        public Functions GetNameLevelList();
+        //public Functions GetNameLevelList();
+
+        /*
+         
+         */
+        void Rooms(int userinput, List<Room> allowedRooms);
     }
+    //public class RoomMenu : IRoom
+    //{
+    //    void Rooms();
+    //}
 }
