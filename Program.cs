@@ -10,7 +10,6 @@ namespace HomeButlerV1
             Functions x = new Functions();
             x.RunProgram();
             
-
         }
     }
 }
