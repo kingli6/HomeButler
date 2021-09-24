@@ -4,22 +4,18 @@ using System.Text;
 
 namespace HomeButlerV1
 {
-        class Menu
+    class Menu
     {
         public string MenuName;
         public int MenuLevel;
         public List<string> MenuList;
-
-
         public Menu() { }
         public Menu(string menuName, int menuLevel)
         {
             MenuName = menuName;
             MenuLevel = menuLevel;
             MenuList = new List<string>();
-        }
-
-        //a method that returns these values?
+        }       
         public Functions GetNameLevelList()
         {
             Functions result = new Functions();
@@ -28,10 +24,5 @@ namespace HomeButlerV1
             result.menuList = MenuList;
             return result;
         }
-
     }
 }
-/*
-   
- 
- */

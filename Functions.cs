@@ -12,9 +12,9 @@ namespace HomeButlerV1
         public int menuLevel;
         int userInput;
         public string TempTitle;
+        public List<string> TempList = new List<string>();
         bool continueProgram = true;
-        //List<string> roomList = new List<string> { "LivingRoom", "Kitchen", "BedRoom", "StudyRoom" "Back", };
-
+       
         public void RunProgram()
         {
             Menu mainMenu = new Menu("HomeButler", 1);
@@ -31,55 +31,53 @@ namespace HomeButlerV1
             Functions entertainmentDetails = entertainmentMenu.GetNameLevelList();
 
             MenuActivities films = new MenuActivities("Films", 3);
+            Functions filmsDetails = films.GetNameLevelList();
             films.AddAllowedRooms(Room.LivingRoom);
+
             MenuActivities games = new MenuActivities("Games", 3);
+            Functions gamesDetails = games.GetNameLevelList();
             games.AddAllowedRooms(Room.LivingRoom);
             games.AddAllowedRooms(Room.StudyRoom);
-
-
-            MenuActivities eatMenu = new MenuActivities("Eat", 3);
-            eatMenu.AddAllowedRooms(Room.Kitchen);
-            eatMenu.AddAllowedRooms(Room.LivingRoom);
-            Functions eatDetails = eatMenu.GetNameLevelList();
-            
-            MenuActivities sleepMenu = new MenuActivities("Sleep", 3);
-            sleepMenu.AddAllowedRooms(Room.BedRoom);
-            Functions sleepDetails = sleepMenu.GetNameLevelList();
 
             Menu healthMenu = new Menu("Health", 2);
             healthMenu.MenuList.Add("Eat");
             healthMenu.MenuList.Add("Rest");
             healthMenu.MenuList.Add("Back");
             Functions healthDetails = healthMenu.GetNameLevelList();
-            /*
-             Here will be things under Health
-             */
-            
+
+            MenuActivities eatMenu = new MenuActivities("Eat", 3);
+            eatMenu.AddAllowedRooms(Room.Kitchen);
+            eatMenu.AddAllowedRooms(Room.LivingRoom);
+            Functions eatDetails = eatMenu.GetNameLevelList();
+
+            MenuActivities sleepMenu = new MenuActivities("Sleep", 3);
+            sleepMenu.AddAllowedRooms(Room.BedRoom);
+            Functions sleepDetails = sleepMenu.GetNameLevelList();
+
             Menu studyMenu = new Menu("Study", 2);           
             studyMenu.MenuList.Add("Programming");
             studyMenu.MenuList.Add("ReadABook");
             studyMenu.MenuList.Add("Back");
             Functions studyDetails = studyMenu.GetNameLevelList();
-
             
             MenuActivities programmingMenu = new MenuActivities("Programming", 3);
             programmingMenu.AddAllowedRooms(Room.StudyRoom);
+            Functions programmingDetails = programmingMenu.GetNameLevelList();
+            
             MenuActivities readabookMenu = new MenuActivities("ReadABook", 3);
             readabookMenu.AddAllowedRooms(Room.StudyRoom);
             readabookMenu.AddAllowedRooms(Room.LivingRoom);
-            //MenuActivities 
-            /*
-             Here will be things under Studies
-             
-             */
-
-            bool oneTimeuseBool = true;
+            Functions readabookDetails = readabookMenu.GetNameLevelList();
+            
+            bool oneTimeUseBool = true;
             //to make the print function work for the first time, we are using
-            //this bool to apply values to needed fields
+            //oneTimeUse bool to apply values to needed fields in the if statement
+
             while (continueProgram)
             {
                 Console.Clear();
-                if (oneTimeuseBool)
+                AsciRobot();
+                if (oneTimeUseBool)
                 {
                     menuTitle = mainMenuDetails.menuTitle;
                     menuLevel = mainMenuDetails.menuLevel;
@@ -88,15 +86,13 @@ namespace HomeButlerV1
                 PrintMenu();
                 userInput = UserChoice();
                 MenuLogic();
-
             }
             void MenuLogic()
             {
                 if (menuLevel == 1)
                 {
                     menuLevel = 2;
-                    oneTimeuseBool = false;
-                    //turning it off since the user determines from now on.
+                    oneTimeUseBool = false;                    
                     switch (userInput)
                     {
                         case 1:
@@ -120,6 +116,8 @@ namespace HomeButlerV1
                         case 4:
                             {
                                 continueProgram = false;
+                                Console.Clear();
+                                AsciRobot();
                                 Console.WriteLine("Going to Sleep");
                                 break;
                             }
@@ -129,25 +127,22 @@ namespace HomeButlerV1
                 }
                 else if (menuLevel == 2)
                 {
-                    //We are using the menuTitle to indicate where we are
+                    menuLevel = 3;
                     if (menuTitle == "Entertainment")
                     {
                         switch (userInput)
                         {
                             case 1:
                                 {
-                                    //Movies, this should lead to room choice?
-                                    //change menu Title
-                                    //change menu List
-                                    //change menu lvl
+
+                                    menuTitle = filmsDetails.menuTitle;
+                                    menuList = filmsDetails.menuList;
                                     break;
                                 }
                             case 2:
                                 {
-                                    //Games, this should lead to room choice?
-                                    //change menu Title
-                                    //change menu List
-                                    //change menu lvl
+                                    menuTitle = gamesDetails.menuTitle;
+                                    menuList = gamesDetails.menuList;
                                     break;
                                 }
                             case 3:
@@ -158,23 +153,24 @@ namespace HomeButlerV1
                                     break;
                                 }
                             default:
-                                break;
+                                    break;
                         }
                     }
                     else if (menuTitle == "Health")
                     {
+                        menuLevel = 3;
                         switch (userInput)
                         {
                             case 1:
                                 {
                                     menuTitle = eatDetails.menuTitle;
                                     menuList = eatDetails.menuList;
-                                    menuLevel = 3;
                                     break;
                                 }
                             case 2:
                                 {
-                                    //Rest
+                                    menuTitle = sleepDetails.menuTitle;
+                                    menuList = sleepDetails.menuList;
                                     break;
                                 }
                             case 3:
@@ -187,25 +183,25 @@ namespace HomeButlerV1
                             default:
                                 break;
                         }
-
                     }
-                    else//its studies
+                    else
                     {
                         switch (userInput)
                         {
                             case 1:
-                                {   //Programming
-                                    //menuTitle = eatDetails.menuTitle;
-                                    //menuList = eatDetails.menuList;
+                                {   
+                                    menuTitle = programmingDetails.menuTitle;
+                                    menuList = programmingDetails.menuList;
                                     break;
                                 }
                             case 2:
                                 {
-                                    //Read Book
+                                    menuTitle = readabookDetails.menuTitle;
+                                    menuList = readabookDetails.menuList;
                                     break;
                                 }
                             case 3:
-                                {   //back
+                                {   
                                     menuTitle = mainMenuDetails.menuTitle;
                                     menuList = mainMenuDetails.menuList;
                                     menuLevel = 1;
@@ -214,7 +210,6 @@ namespace HomeButlerV1
                             default:
                                 break;
                         }
-
                     }
                 }
                 else//Menu level 3
@@ -222,6 +217,7 @@ namespace HomeButlerV1
                     if (menuTitle == "Eat" && userInput != 5)
                     {
                         TempTitle = "Eat";
+                        TempList = eatDetails.menuList;
                         switch (userInput)
                         {
                             case 1:
@@ -244,12 +240,12 @@ namespace HomeButlerV1
                                 break;
                             default:
                                 break;
-                        }
-                        
+                        }                        
                     }
                     else if (menuTitle == "Sleep" && userInput != 5)
                     {
                         TempTitle = "Sleep";
+                        TempList = sleepDetails.menuList;
                         switch (userInput)
                         {
                             case 1:
@@ -269,14 +265,13 @@ namespace HomeButlerV1
                                 sleepMenu.Rooms(4, sleepMenu.AllowedRoom);
                                 break;
                             default:
-                                break;
-                                
+                                break;                                
                         }
-
                     }
                     else if (menuTitle == "Films" && userInput != 5)
                     {
                         TempTitle = "Films";
+                        TempList = filmsDetails.menuList;
                         switch (userInput)
                         {
                             case 1:
@@ -302,6 +297,7 @@ namespace HomeButlerV1
                     else if (menuTitle == "Games"  && userInput != 5)
                     {
                         TempTitle = "Games";
+                        TempList = gamesDetails.menuList;
                         switch (userInput)
                         {
                             case 1:
@@ -327,6 +323,7 @@ namespace HomeButlerV1
                     else if (menuTitle == "Programming"  && userInput != 5)
                     {
                         TempTitle = "Programming";
+                        TempList = programmingDetails.menuList;
 
                         switch (userInput)
                             {
@@ -353,6 +350,7 @@ namespace HomeButlerV1
                     else if (menuTitle == "ReadABook" && userInput != 5)
                     {
                         TempTitle = "ReadABook";
+                        TempList = readabookDetails.menuList;
                         switch (userInput)
                         {
                             case 1:
@@ -380,50 +378,16 @@ namespace HomeButlerV1
                         //logic on going back so if user input is
                         if (userInput == 5)
                         {
-                            menuTitle = TempTitle;
-                            menuLevel = 2;
-
+                            oneTimeUseBool = true;
+                            //menuTitle = TempTitle;
+                            //menuList = TempList;
+                            //menuLevel = 2;
                         }
                     }
-
-                    switch (userInput)
-                    {
-                        case 1:
-                            {
-                                //LivingRoom
-                                break;
-                            }
-                        case 2:
-                            {
-                                //Kitchen
-                                break;
-                            }
-                        case 3:
-                            {
-                                //Bedroom
-                                break;
-                            }
-                        case 4:
-                            {   //Back
-                                
-                               
-                                break;
-                            }
-                        case 5:
-                            {
-                                //cheat sheet that records previous menu
-                                menuTitle = mainMenuDetails.menuTitle;
-                                menuList = mainMenuDetails.menuList;
-                                menuLevel = 2;
-                                break;
-                            }
-                        default:
-                            break;
-                    }
+                    
                 }
             }            
         }
-
 
         void PrintMenu()
         {
@@ -446,8 +410,71 @@ namespace HomeButlerV1
             return int.Parse(Console.ReadLine());
         }
 
+        void AsciRobot()
+        {
+            Random rd = new Random();
+            int robotRd = rd.Next(1, 4);
+            if (robotRd == 1)
+            {
+                Console.WriteLine(robot1);
+            }
+            else if (robotRd == 2)
+            {
+                Console.WriteLine(robot2);
+            }
+            else
+                Console.WriteLine(robot3);
+            
+        }
+        string robot1 = (
+                "\n     ,     ," +
+                "\n    (\\____/)" +
+                "\n     (_oo_)" +
+                "\n       (O)" +
+                "\n     __||__    \\)" +
+                "\n  []/______\\[] /" +
+                "\n  / \\______/ \\/" +
+                "\n /    /__\\" +
+                "\n(\\   /____\\" +
+                "\n" +
+            "\n");
+        string robot2 = (
+                "\n     ,     ," +
+                "\n    (\\____/)" +
+                "\n     (_oo_)" +
+                "\n      (O)" +
+                "\n     __||__    " +
+                "\n  []/______\\[] " +
+                "\n  / \\______/ \\" +
+                "\n /    /__\\    \\" +
+                "\n(\\   /____\\   /)" +
+                "\n" +
+            "\n");
+        string robot3 = (
+                "\n     ,     ," +
+                "\n    (\\____/)" +
+                "\n     (_oo_)" +
+                "\n       (O)" +
+                "\n     __||__    " +
+                "\n  []/______\\[] " +
+                "\n  / \\______/ \\" +
+                "\n /    /__\\    \\" +
+                "\n(\\   /____\\   /)" +
+                "\n" +
+            "\n");
+
     }
+    /*Asci code
+     
+5    ,     ,   4
+4   (\____/)
+5    (_oo_)   
+7      (O)     6
+5    __||__    \)
+2 []/______\[] /
+2 / \______/ \/
+1/    /__\
+(\   /____\
+     
+     */
 }
-//eatMenu.AllowedRoom.Add(Room.Kitchen);
-//eatMenu.AllowedRoom.Add(Room.LivingRoom);//Trial. If we can have this in logic to print out another result.
-//eatMenu.AllowedRoom.Add(Room.Back);

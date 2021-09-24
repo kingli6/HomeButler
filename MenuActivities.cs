@@ -20,7 +20,6 @@ namespace HomeButlerV1
         {
             AllowedRoom.Add(roomName);
         }
-
         public new Functions GetNameLevelList()
         {
             Functions result = new Functions();
@@ -29,11 +28,8 @@ namespace HomeButlerV1
             result.menuList = defaultRooms;
             return result;
         }
-
        public void Rooms (int userinput, List<Room> allowedRooms) 
-        {
-            
-            // 1-3 if he types 1 == kitchen
+        {                     
             if (userinput == 1)
             {
                 if (allowedRooms.Contains(Room.Kitchen))
@@ -44,8 +40,7 @@ namespace HomeButlerV1
                 {
                     Console.WriteLine("That room is not available for that activity");
                 }
-                Console.ReadLine();
-                //he means Livingroom
+                Console.ReadLine();              
             }
             if (userinput == 2)
             {
@@ -86,28 +81,3 @@ namespace HomeButlerV1
         }
     }
 }
-
-//void IRoom.AddRooms(Room roomName)
-//{
-//    AllowedRoom.Add(roomName);
-//}
-
-/*
- * the activities chosen rooms
-    
-    what the user chooses   Intiger 1. LivingRoom", 2. "Kitchen", 3."BedRoom", "Back"
-        kitchen 
- * 
- switch statement with different level responses
-
-
-Enum class
-
-method()
-{films.list.add(enum.kitchen.)
-
-
-printMenu(){
-films.list
-}
- */

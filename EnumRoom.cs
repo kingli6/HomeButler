@@ -9,7 +9,6 @@ namespace HomeButlerV1
         Kitchen = 1,
         LivingRoom = 2,
         BedRoom = 3,
-        StudyRoom = 4
-        
+        StudyRoom = 4        
     }
 }
